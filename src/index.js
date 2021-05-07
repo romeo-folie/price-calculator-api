@@ -5,6 +5,7 @@ const resolvers = require('./resolvers')
 const config = require("./config/default.json");
 
 const app = express()
+const port = process.env.PORT || config.server_port
 
 app.use('/graphiql', graphqlHTTP({
   schema,
@@ -12,6 +13,6 @@ app.use('/graphiql', graphqlHTTP({
   graphiql: true
 }))
 
-app.listen(config.server_port, () => {
-  console.log(`server up on port ${config.server_port}`)
+app.listen(port, () => {
+  console.log(`server up on port ${port}`)
 })
