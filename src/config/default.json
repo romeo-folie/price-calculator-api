@@ -1,0 +1,5 @@
+{
+  "coindesk_url": "https://api.coindesk.com/v1/bpi/currentprice/USD.json",
+  "server_port": 5000,
+  "redis_port": 6379
+}
