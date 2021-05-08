@@ -18,7 +18,7 @@ const resolvers = {
   calculatePrice: async ({type, margin, exchangeRate}) => {
     try {
       var btcPrice, valueUSD, valueNGN;
-
+      
       btcPrice = await getAsync("btcPrice");
 
       if (btcPrice) btcPrice = parseFloat(btcPrice);
