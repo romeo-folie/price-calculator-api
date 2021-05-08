@@ -1,9 +1,16 @@
 const axios = require("axios");
-const redis = require("redis");
 const {promisify} = require("util");
 const config = require("../config/default.json");
 
-const client = redis.createClient(config.redis_port);
+// redis init
+let client;
+if (process.env.REDISTOGO_URL) {
+  const rtg = require("url").parse(process.env.REDISTOGO_URL);
+  client = require("redis").createClient(rtg.port, rtg.hostname);
+  client.auth(rtg.auth.split(":")[1]);
+} else {
+  client = require("redis").createClient(config.redis_port);
+}
 
 const getAsync = promisify(client.get).bind(client);
 
@@ -14,7 +21,7 @@ const resolvers = {
 
       btcPrice = await getAsync("btcPrice");
 
-      if(btcPrice) btcPrice = parseFloat(btcPrice)
+      if (btcPrice) btcPrice = parseFloat(btcPrice);
       else {
         const response = await axios.get(config.coindesk_url);
 
